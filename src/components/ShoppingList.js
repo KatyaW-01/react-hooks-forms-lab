@@ -21,7 +21,7 @@ function ShoppingList({ items }) {
     return matchesCategory && matchesSearch;
   });
 
-  const [formData, setFormData] = useState({name: "", category: ""})
+  const [formData, setFormData] = useState({name: "", category: "Produce"}) //set default category so can't be blank
   
  
 
