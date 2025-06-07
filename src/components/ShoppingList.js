@@ -10,16 +10,21 @@ function ShoppingList({ items }) {
     setSelectedCategory(event.target.value);
   }
 
-  const itemsToDisplay = items.filter((item) => {
-    if (selectedCategory === "All") return true;
+  const [searchTerm, setSearchTerm] = useState('')
 
-    return item.category === selectedCategory;
+  const itemsToDisplay = items.filter((item) => {
+    const matchesCategory =
+      selectedCategory === "All" || item.category === selectedCategory;
+    const matchesSearch = item.name.toLowerCase().includes(searchTerm.toLowerCase());
+
+    return matchesCategory && matchesSearch;
   });
 
+  
   return (
     <div className="ShoppingList">
       <ItemForm />
-      <Filter onCategoryChange={handleCategoryChange} />
+      <Filter onCategoryChange={handleCategoryChange} searchTerm={searchTerm} setSearchTerm={setSearchTerm}/>
       <ul className="Items">
         {itemsToDisplay.map((item) => (
           <Item key={item.id} name={item.name} category={item.category} />
