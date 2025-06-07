@@ -9,10 +9,11 @@ function ShoppingList({ items }) {
   function handleCategoryChange(event) {
     setSelectedCategory(event.target.value);
   }
+  const [newItems, setNewItems] = useState(items)
 
   const [searchTerm, setSearchTerm] = useState('')
 
-  const itemsToDisplay = items.filter((item) => {
+  const itemsToDisplay = newItems.filter((item) => {
     const matchesCategory =
       selectedCategory === "All" || item.category === selectedCategory;
     const matchesSearch = item.name.toLowerCase().includes(searchTerm.toLowerCase());
@@ -20,10 +21,13 @@ function ShoppingList({ items }) {
     return matchesCategory && matchesSearch;
   });
 
+  const [formData, setFormData] = useState({name: "", category: ""})
   
+ 
+
   return (
     <div className="ShoppingList">
-      <ItemForm />
+      <ItemForm formData={formData} setFormData={setFormData} setNewItems={setNewItems} />
       <Filter onCategoryChange={handleCategoryChange} searchTerm={searchTerm} setSearchTerm={setSearchTerm}/>
       <ul className="Items">
         {itemsToDisplay.map((item) => (
